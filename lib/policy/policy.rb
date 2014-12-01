@@ -24,22 +24,26 @@ module Policy
 
     def initialize(args = {})
       @context = args
+
+      @succeeded = true
     end
 
     def fail!(message = "")
       @message = message
 
-      @failed = true
+      @succeeded = false
+    end
 
-      return false
+    def succeed!
+      @succeeded = true
     end
 
     def failed?
-      @failed || false
+      !succeeded?
     end
 
     def succeeded?
-      !@failed
+      @succeeded
     end
   end
 end

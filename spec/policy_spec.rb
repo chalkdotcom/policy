@@ -38,14 +38,14 @@ describe Policy::Policy do
       it { expect(policy_object.succeeded?).to eq(true) }
     end
 
-    context "when failed is false" do
-      before { policy_object.instance_variable_set(:@failed, false) }
+    context "when succeeded is true" do
+      before { policy_object.instance_variable_set(:@succeeded, true) }
 
       it { expect(policy_object.succeeded?).to eq(true) }
     end
 
-    context "when failed is true" do
-      before { policy_object.instance_variable_set(:@failed, true) }
+    context "when succeeded is false" do
+      before { policy_object.instance_variable_set(:@succeeded, false) }
 
       it { expect(policy_object.succeeded?).to eq(false) }
     end
@@ -58,14 +58,14 @@ describe Policy::Policy do
       it { expect(policy_object.failed?).to eq(false) }
     end
 
-    context "when failed is false" do
-      before { policy_object.instance_variable_set(:@failed, false) }
+    context "when succeeded is true" do
+      before { policy_object.instance_variable_set(:@succeeded, true) }
 
       it { expect(policy_object.failed?).to eq(false) }
     end
 
-    context "when failed is true" do
-      before { policy_object.instance_variable_set(:@failed, true) }
+    context "when succeeded is false" do
+      before { policy_object.instance_variable_set(:@succeeded, false) }
 
       it { expect(policy_object.failed?).to eq(true) }
     end
@@ -84,6 +84,17 @@ describe Policy::Policy do
     it "sets the message to one passed in" do
       policy_object.fail!("A message")
       expect(policy_object.message).to eq("A message")
+    end
+  end
+
+  describe ".succeed!" do
+    subject(:policy_object) { policy.new }
+
+    it { expect(policy_object.succeed!).to eq(true) }
+
+    it "succeeds the policy" do
+      policy_object.succeed!
+      expect(policy_object.failed?).to eq(false)
     end
   end
 
